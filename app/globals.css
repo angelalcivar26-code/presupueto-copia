@@ -1,0 +1,86 @@
+/* Sin fuentes externas: se usan las del sistema (Segoe UI / Tahoma), así la pantalla no espera a Google Fonts. */
+@import "tailwindcss";
+
+@theme {
+  --font-serif: ui-serif, Georgia, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Consolas, Menlo, monospace;
+
+  --color-fondo: #F6F3EE;
+  --color-superficie: #FFFFFF;
+  --color-superficie-2: #F1EDE6;
+  --color-borde: #E7E1D8;
+  --color-texto: #1F1B16;
+  --color-texto-2: #7A7167;
+  --color-acento: #B54A26;
+  --color-acento-suave: #FBE3D8;
+  --color-ok: #2F6B4F;
+  --color-ok-suave: #DCEFE3;
+  --color-alerta: #B42318;
+  --color-alerta-suave: #FBE0DD;
+
+  /* Colores institucionales (propuesta A) */
+  --color-inst-verde: #005A28;
+  --color-inst-verde-oscuro: #003D1B;
+  --color-inst-dorado: #C38A03;
+}
+
+/* Fondo institucional gris claro (antes beige/café de la paleta anterior). */
+body {
+  background: #EEF1EF;
+  color: #111418;
+}
+
+/* Estilo institucional: Segoe UI (la de Windows y Office) para títulos, menú y textos.
+   Se aplica al menú y a las pantallas ya migradas (hoy: Cartera e Inversiones). */
+.estilo-institucional {
+  font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  font-variant-numeric: tabular-nums;
+  color: #111418;
+}
+
+/* Tablas de cifras: Tahoma, muy nítida en tamaños chicos (usada en sistemas contables).
+   Aplica a toda <table> y a las tablas armadas con cuadrícula que llevan la clase "tabla-cifras". */
+.estilo-institucional table,
+.estilo-institucional .tabla-cifras {
+  font-family: Tahoma, "Segoe UI", Verdana, sans-serif;
+}
+
+/* Tarjetas y tablas: blanco puro (el mismo del menú) sobre el fondo gris claro, con borde fino y sin sombra (la sombra difumina los bordes). */
+.tarjeta {
+  background: #FFFFFF;
+  border: 1px solid #D5DBD7;
+  border-radius: 8px;
+}
+/* TAMAÑO GENERAL (sep-2026): la herramienta usa tamaños un 10 % menores que el diseño original,
+   escritos directamente en píxeles enteros (así la letra se ve nítida; con zoom quedaban decimales).
+   Aquí se reduce también la escala estándar de Tailwind: espacios (p-3, h-10, gap-2…) y textos
+   (text-xs, text-sm, text-lg) para que todo quede proporcionado. */
+@theme {
+  --spacing: 0.225rem;       /* antes 0.25rem */
+  --text-xs: 11px;           /* antes 12px */
+  --text-sm: 13px;           /* antes 14px */
+  --text-base: 14px;         /* antes 16px */
+  --text-lg: 16px;           /* antes 18px */
+  --text-xl: 18px;           /* antes 20px */
+  --text-2xl: 22px;          /* antes 24px */
+}
+
+/* TABLAS CON ENCABEZADO Y PRIMERA COLUMNA FIJOS (nov-2026): el contenedor desplaza la tabla en los dos sentidos;
+   la fila de meses queda arriba y la cuenta a la izquierda. «fija-2» fija también la segunda columna
+   (código + cuenta), con --col1 = ancho de la primera. */
+.tabla-fija { max-height: calc(100vh - 150px); overflow: auto; }
+.tabla-fija thead th { position: sticky; top: 0; z-index: 3; background-color: #fff; }
+:where(.tabla-fija tbody tr) { background-color: #fff; }
+.tabla-fija tbody td { background-color: inherit; }
+.tabla-fija tr > :first-child { position: sticky; left: 0; z-index: 2; }
+.tabla-fija thead tr > :first-child { z-index: 4; }
+.tabla-fija.fija-2 tr > :nth-child(2) { position: sticky; left: var(--col1, 56px); z-index: 2; }
+.tabla-fija.fija-2 thead tr > :nth-child(2) { z-index: 4; }
+.tabla-fija:not(.fija-2) tbody tr > :first-child, .tabla-fija.fija-2 tbody tr > :nth-child(2) { box-shadow: 1px 0 0 #E3E6E4; }
+
+/* Acciones de fila siempre visibles (editar, eliminar…): la celda del nombre reserva su espacio para que el
+   nombre se acorte con «…» y no quede debajo de los íconos. */
+td:has(> .acciones-1) { padding-right: 34px !important; }
+td:has(> .acciones-2) { padding-right: 58px !important; }
+td:has(> .acciones-3) { padding-right: 82px !important; }
+td:has(> .acciones-4) { padding-right: 106px !important; }
